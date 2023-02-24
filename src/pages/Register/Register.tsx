@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import Input from 'src/components/Input'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { omit } from 'lodash'
-import { authChema, LoginType, RegisterType } from 'src/utils/rules'
+import schema, { Schema } from 'src/utils/rules'
 import { useMutation } from '@tanstack/react-query'
 import { authApi } from 'src/api/api/auth.api'
 import { isAxiosUnprocessableEntity } from 'src/utils/checkType.utils'
@@ -14,10 +14,11 @@ import { Appcontext } from 'src/contexts/app.context'
 import LoadingButton from 'src/components/LoadingButton'
 import path from 'src/constant/path'
 
+type RegisterType = Omit<Schema, 'price_max' | 'price_min'>
 export default function Register() {
   const navigate = useNavigate()
   const { setIsAuthenticated, setProfile } = useContext(Appcontext)
-
+  const RegisterSchema = schema.pick(['confirm_password', 'email', 'password'])
   const {
     register,
     handleSubmit,
@@ -26,10 +27,11 @@ export default function Register() {
     setError,
     watch
   } = useForm<RegisterType>({
-    resolver: yupResolver(authChema)
+    resolver: yupResolver(RegisterSchema)
   })
   const registerAccountMutation = useMutation({
-    mutationFn: (body: LoginType) => authApi.registerAccount(body)
+    mutationFn: (body: Omit<RegisterType, 'confirm_password'>) =>
+      authApi.registerAccount(body)
   })
 
   const onSubmit = handleSubmit(

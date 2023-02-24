@@ -1,27 +1,31 @@
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { loginSchema, LoginType } from 'src/utils/rules'
+
 import { useMutation } from '@tanstack/react-query'
 import { authApi } from 'src/api/api/auth.api'
 import Input from 'src/components/Input'
 import { ErrorResponse } from 'src/types/utils.type'
 import { isAxiosUnprocessableEntity } from 'src/utils/checkType.utils'
-import { saveAccessTokenToLS } from 'src/utils/auth.utils'
+
 import { useContext } from 'react'
 import { Appcontext } from 'src/contexts/app.context'
 import LoadingButton from 'src/components/LoadingButton'
+import schema, { Schema } from 'src/utils/rules'
 
+type LoginType = Pick<Schema, 'email' | 'password'>
 export default function Login() {
   const navigate = useNavigate()
   const { setIsAuthenticated, setProfile } = useContext(Appcontext)
-
+  const loginSchema = schema.pick(['email', 'password'])
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError
-  } = useForm<LoginType>({ resolver: yupResolver(loginSchema) })
+  } = useForm<LoginType>({
+    resolver: yupResolver(loginSchema)
+  })
 
   const loginAccountMutation = useMutation({
     mutationFn: (body: LoginType) => authApi.loginAccount(body)

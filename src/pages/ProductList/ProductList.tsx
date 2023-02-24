@@ -5,9 +5,9 @@ import { productApi } from 'src/api/api/product.api'
 import useQueryString from 'src/hooks/useQueryString'
 import { ProductListConfig } from 'src/types/product.type'
 import Pagination from '../Pagination'
-import AsideFilter from './AsideFilter'
-import ProductItem from './ProductItem'
-import SortProductList from './SortProductList'
+import AsideFilter from './components/AsideFilter'
+import ProductItem from './components/ProductItem'
+import SortProductList from './components/SortProductList'
 
 export type QueryConfig = {
   [key in keyof ProductListConfig]: string
@@ -15,6 +15,7 @@ export type QueryConfig = {
 
 export default function ProductList() {
   const queryParams: QueryConfig = useQueryString()
+
   const queryConfig: QueryConfig = omitBy(
     {
       page: queryParams.page || '1',

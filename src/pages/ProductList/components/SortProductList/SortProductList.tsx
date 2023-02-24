@@ -16,11 +16,13 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
   const { sort_by = sortBy.createdAt, order } = queryConfig
   const page = Number(queryConfig.page)
   const navigate = useNavigate()
+
   const isActiveSortBy = (
     sortByValue: Exclude<ProductListConfig['sort_by'], undefined>
   ) => {
     return sort_by === sortByValue
   }
+
   const handleSort = (
     sortByValue: Exclude<ProductListConfig['sort_by'], undefined>
   ) => {
