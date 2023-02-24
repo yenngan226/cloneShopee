@@ -39,7 +39,8 @@ export default function MainHeader() {
   const { data: purchasesInCart } = useQuery({
     queryKey: ['purchases', { status: purchasesStatus.inCart }],
     queryFn: () =>
-      purchaseApi.getPurchasesList({ status: purchasesStatus.inCart })
+      purchaseApi.getPurchasesList({ status: purchasesStatus.inCart }),
+    enabled: localStorage.getItem('access_token') ? true : false
   })
   const purchasesInCartProducts = purchasesInCart?.data.data
 
@@ -278,7 +279,9 @@ export default function MainHeader() {
                   />
                 </svg>
                 <span className='absolute right-[-0.8rem] top-[-0.6rem] rounded-full bg-white py-[1px] px-[0.7rem] text-sm text-orange-600'>
-                  {purchasesInCartProducts?.length}
+                  {purchasesInCartProducts?.length
+                    ? purchasesInCartProducts?.length
+                    : 0}
                 </span>
               </Link>
             </Popover>
