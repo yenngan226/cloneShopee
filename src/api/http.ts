@@ -45,6 +45,7 @@ class Http {
             this.accessToken = ''
             clearLS()
           }
+
           return response
         },
         (error: AxiosError) => {

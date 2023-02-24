@@ -1,14 +1,27 @@
-import { Link } from 'react-router-dom'
+import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import Popover from '../Popover'
-import { useMutation } from '@tanstack/react-query'
-
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { omit } from 'lodash'
 import { authApi } from 'src/api/api/auth.api'
 import { useContext } from 'react'
 import { Appcontext } from 'src/contexts/app.context'
 import path from 'src/constant/path'
 import { clearLS } from 'src/utils/auth.utils'
+import useQueryConfig from 'src/hooks/useQueryConfig'
+import { useForm } from 'react-hook-form'
+import schema, { Schema } from 'src/utils/rules'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { purchasesStatus } from 'src/constant/purchase'
+import purchaseApi from 'src/api/api/purchase.api'
+import nopurchase from '../../assets/img/nopurchase.png'
+import { currencyExchange } from 'src/utils/formatNumber.utils'
 
+type FormData = Pick<Schema, 'name'>
+const nameSchema = schema.pick(['name'])
+const MAX_CART_PRODUCTS = 5
 export default function MainHeader() {
+  const navigate = useNavigate()
+  const queryConfig = useQueryConfig()
   const { isAuthenticated, setIsAuthenticated, setProfile, profile } =
     useContext(Appcontext)
   const logoutMutation = useMutation({
@@ -22,7 +35,28 @@ export default function MainHeader() {
       console.log(error)
     }
   })
+  //header chỉ re render khi component unmount rồi mount lại. trường hợp này header chỉ rerender thôi nên k gọi lại useQuery lần nữa
+  const { data: purchasesInCart } = useQuery({
+    queryKey: ['purchases', { status: purchasesStatus.inCart }],
+    queryFn: () =>
+      purchaseApi.getPurchasesList({ status: purchasesStatus.inCart })
+  })
+  const purchasesInCartProducts = purchasesInCart?.data.data
+
   const handleLogout = () => logoutMutation.mutate()
+  const { register, handleSubmit } = useForm<FormData>({
+    defaultValues: { name: '' },
+    resolver: yupResolver(nameSchema)
+  })
+  const onSubmit = handleSubmit((data) => {
+    const config = queryConfig.order
+      ? omit({ ...queryConfig, name: data.name }, ['order', 'sort_by'])
+      : { ...queryConfig, name: data.name }
+    navigate({
+      pathname: path.home,
+      search: createSearchParams(config).toString()
+    })
+  })
   return (
     <div className=' bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2'>
       <div className='container'>
@@ -135,13 +169,13 @@ export default function MainHeader() {
               </g>
             </svg>
           </Link>
-          <form className='col-span-9'>
+          <form className='col-span-9' onSubmit={onSubmit}>
             <div className='flex rounded-md bg-white p-1'>
               <input
                 type='text'
-                name='search'
                 placeholder='FREESHIP ĐƠN TỪ 0Đ'
                 className='flex-grow border-none bg-transparent px-2 py-1 outline-none'
+                {...register('name')}
               />
               <button className='flex-shrink-0 rounded-md bg-orangeShopee py-2 px-5 transition duration-200 hover:bg-orange-700 lg:px-6'>
                 <svg
@@ -172,88 +206,52 @@ export default function MainHeader() {
                       Sản phẩm mới thêm
                     </div>
                     <div className='mt-5'>
-                      <div className='mt-3 flex items-center'>
-                        <div className='flex-shrink-0'>
-                          <img
-                            src='https://images-ap-prod.cms.commerce.dynamics.com/cms/api/tstpxgfmq/imageFileData/search?fileName=/Products%2FNCH0129_000_001.jpg'
-                            alt='product'
-                            className='h-10 w-10 object-cover'
-                          />
+                      {purchasesInCartProducts ? (
+                        purchasesInCartProducts
+                          .slice(0, MAX_CART_PRODUCTS)
+                          .map((product, index) => {
+                            return (
+                              <div
+                                key={product._id}
+                                className='mt-2 flex items-center p-2 hover:bg-gray-200'
+                              >
+                                <div className='flex-shrink-0'>
+                                  <img
+                                    src={product.product.image}
+                                    alt={product.product.name}
+                                    className='h-10 w-10 object-cover'
+                                  />
+                                </div>
+                                <div className='ml-2 flex-grow overflow-hidden truncate'>
+                                  {product.product.name}
+                                </div>
+                                <div className='ml-2 flex-shrink-0'>
+                                  <span className='text-orangeShopee'>
+                                    đ {currencyExchange(product.product.price)}
+                                  </span>
+                                </div>
+                              </div>
+                            )
+                          })
+                      ) : (
+                        <div className=''>
+                          <img alt='no purchase' src={nopurchase} />
+                          <div className='mt-3 text-center capitalize'>
+                            Chưa có sản phẩm
+                          </div>
                         </div>
-                        <div className='ml-2 flex-grow overflow-hidden truncate'>
-                          Túi tole thời trang màu xanh
-                        </div>
-                        <div className='ml-2 flex-shrink-0'>
-                          <span className='text-orangeShopee'>399.000đ</span>
-                        </div>
-                      </div>
-                      <div className='mt-3 flex items-center'>
-                        <div className='flex-shrink-0'>
-                          <img
-                            src='https://images-ap-prod.cms.commerce.dynamics.com/cms/api/tstpxgfmq/imageFileData/search?fileName=/Products%2FNCH0129_000_001.jpg'
-                            alt='product'
-                            className='h-10 w-10 object-cover'
-                          />
-                        </div>
-                        <div className='ml-2 flex-grow overflow-hidden truncate'>
-                          Túi tole thời trang màu xanh giá rẻ
-                        </div>
-                        <div className='ml-2 flex-shrink-0'>
-                          <span className='text-orangeShopee'>399.000đ</span>
-                        </div>
-                      </div>
-                      <div className='mt-3 flex items-center'>
-                        <div className='flex-shrink-0'>
-                          <img
-                            src='https://www.lg.com/us/images/tv-audio-video-accessories/md05893656/gallery/Z01.jpg'
-                            alt='product'
-                            className='h-10 w-10 object-cover'
-                          />
-                        </div>
-                        <div className='ml-2 flex-grow overflow-hidden truncate'>
-                          Remote Thay Thế Điều Khiển Tivi LG 2018 2017 2016 2015
-                          WebOS Smart TV AN-MR600 AN-MR650 AN-MR650A AN-MR18BA
-                          (Không Nói)
-                        </div>
-                        <div className='ml-2 flex-shrink-0'>
-                          <span className='text-orangeShopee'>450.000đ</span>
-                        </div>
-                      </div>
-                      <div className='mt-3 flex items-center'>
-                        <div className='flex-shrink-0'>
-                          <img
-                            src='https://media.hasaki.vn/catalog/product/t/o/top_fb_ads_422206054_050722-1657012158_img_358x358_843626_fit_center.jpg'
-                            alt='product'
-                            className='h-10 w-10 object-cover'
-                          />
-                        </div>
-                        <div className='ml-2 flex-grow overflow-hidden truncate'>
-                          Skinceuticals Hydrating B5 giúp cấp ẩm và hỗ trợ quá
-                          trình tái tạo da 30ml
-                        </div>
-                        <div className='ml-2 flex-shrink-0'>
-                          <span className='text-orangeShopee'>1.750.000đ</span>
-                        </div>
-                      </div>
-                      <div className='mt-3 flex items-center'>
-                        <div className='flex-shrink-0'>
-                          <img
-                            src='https://dosi-in.com/images/detailed/42/CDL10_1.jpg'
-                            alt='product'
-                            className='h-10 w-10 object-cover'
-                          />
-                        </div>
-                        <div className='ml-2 flex-grow overflow-hidden truncate'>
-                          Tee basic ss1 CREWZ áo thun tay lỡ unisex Local Brand
-                          - AO_THUN_DVR (V427)
-                        </div>
-                        <div className='ml-2 flex-shrink-0'>
-                          <span className='text-orangeShopee'>89.000đ</span>
-                        </div>
-                      </div>
+                      )}
                     </div>
                     <div className='mt-6 flex items-center justify-between'>
-                      <div className='cursor-pointer hover:text-orangeShopee'>
+                      <div className='flex cursor-pointer items-center hover:text-orangeShopee'>
+                        {purchasesInCartProducts && (
+                          <span className='mr-1 font-semibold'>
+                            {purchasesInCartProducts.length > MAX_CART_PRODUCTS
+                              ? purchasesInCartProducts.length -
+                                MAX_CART_PRODUCTS
+                              : ''}
+                          </span>
+                        )}
                         Thêm vào giỏ hàng
                       </div>
                       <button className='rounder-md rounded bg-orangeShopee py-3 px-4 text-white shadow-sm'>
@@ -264,7 +262,7 @@ export default function MainHeader() {
                 </div>
               }
             >
-              <Link to='/'>
+              <Link to='/' className='relative'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -279,6 +277,9 @@ export default function MainHeader() {
                     d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
                   />
                 </svg>
+                <span className='absolute right-[-0.8rem] top-[-0.6rem] rounded-full bg-white py-[1px] px-[0.7rem] text-sm text-orange-600'>
+                  {purchasesInCartProducts?.length}
+                </span>
               </Link>
             </Popover>
           </div>

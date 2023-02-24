@@ -5,7 +5,8 @@ import ProductRating from 'src/pages/ProductRating'
 import { Product } from 'src/types/product.type'
 import {
   currencyExchange,
-  formatNumberToSocialType
+  formatNumberToSocialType,
+  generateURL
 } from 'src/utils/formatNumber.utils'
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
 
 export default function ProductItem({ product }: Props) {
   return (
-    <Link to={path.home}>
+    <Link to={`${path.home}${generateURL(product.name, product._id)}`}>
       <div className='hover:shadown-md overflow-hidden rounded-sm bg-white shadow transition-transform duration-100 hover:translate-y-[-0.1rem]'>
         <div className='relative w-full pt-[100%]'>
           <img

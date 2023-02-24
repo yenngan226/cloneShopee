@@ -10,3 +10,20 @@ export const formatNumberToSocialType = (number: number) => {
     .replace('.', ',')
     .toLocaleLowerCase()
 }
+const removeSpecialCharacter = (str: string) =>
+  str.replace(
+    // eslint-disable-next-line no-useless-escape
+    /!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g,
+    ''
+  )
+export const rateSale = (original: number, discountPrice: number) =>
+  Math.round(((original - discountPrice) / original) * 100) + '%'
+
+export const generateURL = (name: string, id: string) => {
+  return removeSpecialCharacter(name).replace(/\s/g, '-') + `-i,${id}`
+}
+
+export const getIdFromURL = (url: string) => {
+  const arr = url.split('-i,')
+  return arr[arr.length - 1]
+}

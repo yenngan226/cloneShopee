@@ -5,17 +5,30 @@ import { Appcontext } from 'src/contexts/app.context'
 import MainLayout from 'src/layouts/MainLayout'
 import RegisterLayout from 'src/layouts/RegisterLayout'
 import Login from 'src/pages/Login'
+import ProductDetail from 'src/pages/PageDetail'
 import ProductList from 'src/pages/ProductList'
 import Profile from 'src/pages/Profile'
 import Register from 'src/pages/Register'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(Appcontext)
-  return isAuthenticated ? <Outlet /> : <Navigate to={path.login} />
+  return isAuthenticated ? (
+    <MainLayout>
+      <Outlet />
+    </MainLayout>
+  ) : (
+    <Navigate to={path.login} />
+  )
 }
 function RejectedRoute() {
   const { isAuthenticated } = useContext(Appcontext)
-  return !isAuthenticated ? <Outlet /> : <Navigate to='/' />
+  return !isAuthenticated ? (
+    <RegisterLayout>
+      <Outlet />
+    </RegisterLayout>
+  ) : (
+    <Navigate to='/' />
+  )
 }
 export default function useRouteElements() {
   const routeElement = useRoutes([
@@ -26,19 +39,11 @@ export default function useRouteElements() {
       children: [
         {
           path: path.login,
-          element: (
-            <RegisterLayout>
-              <Login />
-            </RegisterLayout>
-          )
+          element: <Login />
         },
         {
           path: path.register,
-          element: (
-            <RegisterLayout>
-              <Register />
-            </RegisterLayout>
-          )
+          element: <Register />
         }
       ]
     },
@@ -49,11 +54,7 @@ export default function useRouteElements() {
       children: [
         {
           path: path.profile,
-          element: (
-            <MainLayout>
-              <Profile />
-            </MainLayout>
-          )
+          element: <Profile />
         }
       ]
     },
@@ -63,6 +64,15 @@ export default function useRouteElements() {
       element: (
         <MainLayout>
           <ProductList />
+        </MainLayout>
+      )
+    },
+    {
+      path: path.productDetail,
+      index: true,
+      element: (
+        <MainLayout>
+          <ProductDetail />
         </MainLayout>
       )
     }

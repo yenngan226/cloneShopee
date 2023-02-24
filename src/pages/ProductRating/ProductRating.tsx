@@ -2,8 +2,12 @@ import React from 'react'
 
 type Props = {
   rating: number
+  activeClassName?: string
 }
-export default function ProductRating({ rating }: Props) {
+export default function ProductRating({
+  rating,
+  activeClassName = 'h-3 w-3 fill-yellow-500'
+}: Props) {
   const handleWidth = (order: number) => {
     if (order < rating) {
       return '100%'
@@ -28,7 +32,7 @@ export default function ProductRating({ rating }: Props) {
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 24 24'
-                  className='h-3 w-3 fill-yellow-500'
+                  className={activeClassName}
                 >
                   <path
                     fillRule='evenodd'

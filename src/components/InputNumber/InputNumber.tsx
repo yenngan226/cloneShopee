@@ -1,14 +1,15 @@
 import { forwardRef, InputHTMLAttributes } from 'react'
 import { RegisterOptions, UseFormRegister } from 'react-hook-form'
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputNumberProps
+  extends InputHTMLAttributes<HTMLInputElement> {
   errorMessage?: string
   classNameInput?: string
   classNameError?: string
   className?: string
 }
 
-const InputNumber = forwardRef<HTMLInputElement, Props>(
+const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
   function InputNumberInner(
     {
       errorMessage,

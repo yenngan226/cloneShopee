@@ -15,6 +15,7 @@ export type Product = {
   image: string
   createdAt: string
   updatedAt: string
+  description: string
 }
 
 export type ProductList = {
@@ -37,4 +38,8 @@ export type ProductListConfig = {
   price_min?: number | string
   name?: string
   category?: string
+}
+
+export type QueryConfig = {
+  [key in keyof ProductListConfig]: string
 }

@@ -7,9 +7,10 @@ import InputNumber from 'src/components/InputNumber'
 import LoadingButton from 'src/components/LoadingButton'
 import path from 'src/constant/path'
 import { Category } from 'src/types/category.type'
+import { QueryConfig } from 'src/types/product.type'
 import { NoUndefinedField } from 'src/types/utils.type'
 import schema, { Schema } from 'src/utils/rules'
-import { QueryConfig } from '../../ProductList'
+
 import RatingStar from '../RatingStar'
 
 type Props = {
@@ -102,7 +103,8 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
                   pathname: path.home,
                   search: createSearchParams({
                     ...queryConfig,
-                    category: categoryItem._id
+                    category: categoryItem._id,
+                    page: '1'
                   }).toString()
                 }}
                 className={classNames(' relative flex items-center ', {
