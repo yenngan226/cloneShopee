@@ -1,5 +1,6 @@
 import { isUndefined, omitBy } from 'lodash'
-import { QueryConfig } from 'src/pages/ProductList/ProductList'
+import { QueryConfig } from 'src/types/product.type'
+
 import useQueryString from './useQueryString'
 
 export default function useQueryConfig() {

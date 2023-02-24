@@ -1,6 +1,6 @@
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import path from 'src/constant/path'
-import { QueryConfig } from '../../ProductList'
+import { QueryConfig } from 'src/types/product.type'
 
 //Thuật toán render rating star
 //Index = 0 thì có 5 ngôi sao có indexStar từ 0-4 màu vàng
