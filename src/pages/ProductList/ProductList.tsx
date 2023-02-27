@@ -28,16 +28,16 @@ export default function ProductList() {
 
   return (
     <div className='bg-gray-200 py-6'>
-      <div className='container'>
+      <div className='mx-3 md:container'>
         {productQuery.data && (
           <div className='grid grid-cols-12 gap-6'>
-            <div className='col-span-3'>
+            <div className='hidden md:col-span-3 md:block'>
               <AsideFilter
                 categories={categoryQuery.data?.data.data || []}
                 queryConfig={queryConfig}
               />
             </div>
-            <div className='col-span-9'>
+            <div className='col-span-12 md:col-span-9'>
               <SortProductList
                 queryConfig={queryConfig}
                 pageSize={productQuery.data.data.data.pagination.page_size}

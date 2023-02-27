@@ -140,10 +140,10 @@ export default function ProductDetail() {
   console.log(productData._id)
 
   return (
-    <div className='bg-gray-200 py-6'>
-      <div className='container bg-white'>
-        <div className='grid grid-cols-12 gap-9 py-10'>
-          <div className='col-span-5'>
+    <div className='bg-gray-200 py-4 md:px-6'>
+      <div className='bg-white px-3 md:container'>
+        <div className='grid-cols-12  gap-9 py-10 md:grid'>
+          <div className='col-span-12 w-[360px] md:col-span-5 md:w-full'>
             <div
               className='relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow'
               onMouseMove={handleZoom}
@@ -214,8 +214,8 @@ export default function ProductDetail() {
               </button>
             </div>
           </div>
-          <div className='col-span-7'>
-            <h1 className='text-xl font-medium uppercase line-clamp-2'>
+          <div className='md:col-span-7'>
+            <h1 className='mt-2 text-xl font-medium uppercase line-clamp-2 md:mt-0'>
               {productData.name}
             </h1>
             <div className='mt-6 flex items-center'>
@@ -252,7 +252,9 @@ export default function ProductDetail() {
               </div>
             </div>
             <div className='mt-6 flex items-center'>
-              <span className='capitialize text-gray-500'>Số lượng</span>
+              <span className='capitialize flex-shrink-0 text-gray-500'>
+                Số lượng
+              </span>
               <QuantityController
                 onType={handleBuyCount}
                 onIncrease={handleBuyCount}
@@ -260,7 +262,7 @@ export default function ProductDetail() {
                 value={buyCount}
                 max={productData.quantity}
               />
-              <div className='ml-6 text-sm text-gray-600'>
+              <div className='ml-4 text-sm text-gray-600 md:ml-6'>
                 <span>{productData.quantity}</span>
                 <span>{` sản phẩm có sẵn`}</span>
               </div>
@@ -297,8 +299,8 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
-      <div className='mt-4  p-4'>
-        <div className='container bg-white py-4'>
+      <div className='mt-4 '>
+        <div className='bg-white py-4 px-2 md:container'>
           <div className='mt-2 rounded bg-gray-50 p-2 text-lg uppercase text-slate-700'>
             Mô tả sản phẩm
           </div>
@@ -311,13 +313,13 @@ export default function ProductDetail() {
           </div>
         </div>
       </div>
-      <div className='mt-4 p-4'>
-        <div className='container bg-white py-4'>
+      <div className='mt-4'>
+        <div className='bg-white px-2 py-4 md:container'>
           <div className='mt-2 rounded bg-gray-50 p-2 text-lg uppercase text-slate-700'>
             Có thể bạn cũng thích
           </div>
           {sameCateProduct && (
-            <div className='mt-4 grid grid-cols-4 gap-3 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7'>
+            <div className='mt-4 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7'>
               {sameCateProduct.data.data.products.map((product, index) => {
                 return (
                   <div key={index} className='col-span-1'>

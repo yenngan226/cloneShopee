@@ -8,12 +8,12 @@ export default function CartHeader() {
   return (
     <div className='border-b border-b-black/20 '>
       <div className='bg-orangeShopee'>
-        <div className='container'>
+        <div className='px-3 md:container'>
           <NavHeader />
         </div>
       </div>
       <div className='bg-white py-6'>
-        <div className='container'>
+        <div className='px-3 md:container'>
           <nav className='justify-between md:flex md:items-center'>
             <Link to={path.home}>
               <div className='flex items-end'>

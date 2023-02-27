@@ -52,7 +52,7 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
   }
   return (
     <div className='bg-gray-300/40 py-4 px-3'>
-      <div className='flex flex-wrap items-center justify-between gap-2'>
+      <div className='flex flex-col flex-wrap items-end justify-between gap-2 lg:flex-row'>
         <div className='flex flex-wrap items-center gap-2'>
           <div className=''>Sắp xếp theo</div>
           <button

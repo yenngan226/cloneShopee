@@ -33,11 +33,11 @@ export default function NavHeader() {
 
   return (
     <div>
-      <div className='flex justify-end '>
+      <div className='flex justify-between md:justify-end '>
         <Popover
           placement='bottom'
           as={'span'}
-          className='mr-5 flex cursor-pointer items-center justify-center py-1 text-white hover:text-gray-300'
+          className='ml-2 flex cursor-pointer items-center justify-center py-1 text-white hover:text-gray-300 md:mr-5'
           renderPopover={
             <div className='relative rounded-md border border-gray-200 bg-white shadow-md'>
               <div className='flex flex-col px-2 py-3'>
@@ -127,7 +127,7 @@ export default function NavHeader() {
                 className='h-full w-full rounded-full object-cover'
               />
             </div>
-            <span className='mr-3 text-sm'>{profile?.email}</span>
+            <span className='text-sm md:mr-3'>{profile?.email}</span>
           </Popover>
         )}
       </div>

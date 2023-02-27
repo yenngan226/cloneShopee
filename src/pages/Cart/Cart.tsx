@@ -168,8 +168,8 @@ export default function Cart() {
     }
   }
   return (
-    <div className='bg-gray-100 py-16'>
-      <div className='container'>
+    <div className='bg-gray-100 py-8 md:py-16'>
+      <div className='px-3 md:container'>
         {extendedPurchases.length > 0 ? (
           <>
             <div className='overflow-auto'>
@@ -305,8 +305,8 @@ export default function Cart() {
                 </div>
               </div>
             </div>
-            <div className='sticky bottom-0 z-10 my-4 flex items-center rounded-sm bg-white py-5 pl-9 pr-5'>
-              <div className='flex flex-shrink-0 items-center justify-center pr-3'>
+            <div className='sticky bottom-0 z-10 my-4 items-center rounded-sm bg-white py-5 pl-9 pr-5 sm:flex'>
+              <div className='flex flex-shrink-0 items-center justify-start pr-3 md:justify-center'>
                 <input
                   type='checkbox'
                   name=''
@@ -315,23 +315,26 @@ export default function Cart() {
                   checked={isAllChecked}
                   onChange={handleCheckAll}
                 />
+                <button
+                  className='mx-1 hover:text-orangeShopee lg:mx-3'
+                  onClick={handleCheckAll}
+                >
+                  {`Chọn tất cả(${extendedPurchases.length})`}
+                </button>
+                <button
+                  className='mx-3 hover:text-orangeShopee'
+                  onClick={handleDeleteMultiplePurchase}
+                >
+                  Xóa
+                </button>
               </div>
-              <button
-                className='mx-1 hover:text-orangeShopee lg:mx-3'
-                onClick={handleCheckAll}
-              >
-                {`Chọn tất cả(${extendedPurchases.length})`}
-              </button>
-              <button
-                className='mx-3 hover:text-orangeShopee'
-                onClick={handleDeleteMultiplePurchase}
-              >
-                Xóa
-              </button>
-              <div className='ml-auto flex items-center'>
+              <div className='ml-auto mt-3 flex items-center justify-between md:mt-0'>
                 <div>
-                  <div className='flex items-center justify-end'>
-                    <div>{`Tổng thanh toán (${checkedPurchasesCount} Sản phẩm)`}</div>
+                  <div className='flex items-center justify-between sm:justify-end'>
+                    <div className='w-full items-center md:flex'>
+                      <div>{`Tổng thanh toán`}</div>
+                      <div>{`(${checkedPurchasesCount} Sản phẩm)`}</div>
+                    </div>
                     <div className='ml-2 text-2xl text-orange-500'>{`đ${currencyExchange(
                       totalCheckedPurchaseAmount
                     )}`}</div>
@@ -346,7 +349,7 @@ export default function Cart() {
               </div>
               <LoadingButton
                 onClick={handleBuyProducts}
-                className='w-30 ml-3 flex h-12 items-center justify-center bg-orangeShopee p-3 uppercase text-white hover:bg-red-600'
+                className='w-30 ml-auto mt-3 flex h-12 items-center justify-center bg-orangeShopee p-3 uppercase text-white hover:bg-red-600 md:mt-0 md:ml-3'
                 disabled={buyProductMutation.isLoading}
               >
                 Mua hàng

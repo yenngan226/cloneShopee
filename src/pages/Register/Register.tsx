@@ -79,7 +79,7 @@ export default function Register() {
         <div className='grid grid-cols-1 py-10 lg:grid-cols-5 lg:py-32 lg:pr-10'>
           <div className='lg:col-span-2 lg:col-start-4'>
             <form
-              className='rounded bg-white p-10 shadow-sm'
+              className='rounded bg-white p-6 shadow-sm md:p-10'
               onSubmit={onSubmit}
               noValidate
             >
