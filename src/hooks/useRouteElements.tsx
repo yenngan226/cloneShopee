@@ -8,6 +8,7 @@ import MainLayout from 'src/layouts/MainLayout'
 import RegisterLayout from 'src/layouts/RegisterLayout'
 import Cart from 'src/pages/Cart'
 import Login from 'src/pages/Login'
+import NotFound from 'src/pages/NotFound'
 import ProductDetail from 'src/pages/PageDetail'
 import ProductList from 'src/pages/ProductList'
 import Profile from 'src/pages/Profile'
@@ -36,10 +37,12 @@ export default function useRouteElements() {
       children: [
         {
           path: path.login,
+
           element: <Login />
         },
         {
           path: path.register,
+
           element: <Register />
         }
       ]
@@ -51,6 +54,7 @@ export default function useRouteElements() {
       children: [
         {
           path: path.profile,
+
           element: (
             <MainLayout header={<MainHeader />}>
               <Profile />
@@ -59,6 +63,7 @@ export default function useRouteElements() {
         },
         {
           path: path.cart,
+
           element: (
             <MainLayout header={<CartHeader />}>
               <Cart />
@@ -68,7 +73,7 @@ export default function useRouteElements() {
       ]
     },
     {
-      path: '',
+      path: path.home,
       index: true,
       element: (
         <MainLayout header={<MainHeader />}>
@@ -82,6 +87,14 @@ export default function useRouteElements() {
       element: (
         <MainLayout header={<MainHeader />}>
           <ProductDetail />
+        </MainLayout>
+      )
+    },
+    {
+      path: '*',
+      element: (
+        <MainLayout header={<MainHeader />}>
+          <NotFound />
         </MainLayout>
       )
     }

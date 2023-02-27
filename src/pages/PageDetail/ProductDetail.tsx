@@ -15,6 +15,7 @@ import {
   getIdFromURL,
   rateSale
 } from 'src/utils/formatNumber.utils'
+import NotFound from '../NotFound'
 import ProductItem from '../ProductList/components/ProductItem'
 import ProductRating from '../ProductRating'
 
@@ -34,6 +35,11 @@ export default function ProductDetail() {
     queryKey: ['product', id],
     queryFn: () => {
       return productApi.getProductDetail(id as string)
+    },
+    onError: () => {
+      navigate({
+        pathname: '/1/notFound'
+      })
     }
   })
   const productData = productDetailQuery.data?.data.data
@@ -131,6 +137,8 @@ export default function ProductDetail() {
     setBuyCount(value)
   }
   if (!productData) return null
+  console.log(productData._id)
+
   return (
     <div className='bg-gray-200 py-6'>
       <div className='container bg-white'>
