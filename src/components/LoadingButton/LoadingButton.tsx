@@ -8,7 +8,7 @@ export default function LoadingButton(props: ButtonProps) {
   const newClassName = disabled ? `${className} cursor-not-allowed` : className
   return (
     <button className={newClassName} disabled={disabled} {...rest}>
-      <span className='mr-2'>{children}</span>
+      <span className={`${disabled ? 'mr-2' : ''}`}>{children}</span>
       {isLoading && (
         <svg
           aria-hidden='true'

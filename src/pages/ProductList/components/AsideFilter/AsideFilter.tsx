@@ -187,7 +187,7 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
                       field.onChange(e)
                       trigger('price_min')
                     }}
-                    //truyền thêm ref để có những method như focus,...
+                    // truyền thêm ref để có những method như focus,...
 
                     classNameError='hidden'
                   />

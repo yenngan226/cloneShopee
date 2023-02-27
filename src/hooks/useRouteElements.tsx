@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
+import CartHeader from 'src/components/CartHeader'
+import MainHeader from 'src/components/MainHeader'
 import path from 'src/constant/path'
 import { Appcontext } from 'src/contexts/app.context'
 import MainLayout from 'src/layouts/MainLayout'
 import RegisterLayout from 'src/layouts/RegisterLayout'
+import Cart from 'src/pages/Cart'
 import Login from 'src/pages/Login'
 import ProductDetail from 'src/pages/PageDetail'
 import ProductList from 'src/pages/ProductList'
@@ -12,13 +15,7 @@ import Register from 'src/pages/Register'
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(Appcontext)
-  return isAuthenticated ? (
-    <MainLayout>
-      <Outlet />
-    </MainLayout>
-  ) : (
-    <Navigate to={path.login} />
-  )
+  return isAuthenticated ? <Outlet /> : <Navigate to={path.login} />
 }
 function RejectedRoute() {
   const { isAuthenticated } = useContext(Appcontext)
@@ -54,7 +51,19 @@ export default function useRouteElements() {
       children: [
         {
           path: path.profile,
-          element: <Profile />
+          element: (
+            <MainLayout header={<MainHeader />}>
+              <Profile />
+            </MainLayout>
+          )
+        },
+        {
+          path: path.cart,
+          element: (
+            <MainLayout header={<CartHeader />}>
+              <Cart />
+            </MainLayout>
+          )
         }
       ]
     },
@@ -62,7 +71,7 @@ export default function useRouteElements() {
       path: '',
       index: true,
       element: (
-        <MainLayout>
+        <MainLayout header={<MainHeader />}>
           <ProductList />
         </MainLayout>
       )
@@ -71,7 +80,7 @@ export default function useRouteElements() {
       path: path.productDetail,
       index: true,
       element: (
-        <MainLayout>
+        <MainLayout header={<MainHeader />}>
           <ProductDetail />
         </MainLayout>
       )

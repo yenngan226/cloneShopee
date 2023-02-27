@@ -1,11 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import DOMPurify from 'dompurify'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { productApi } from 'src/api/api/product.api'
 import purchaseApi from 'src/api/api/purchase.api'
 import QuantityController from 'src/components/QuantityController'
+import path from 'src/constant/path'
 import { purchasesStatus } from 'src/constant/purchase'
 import { Product, ProductListConfig } from 'src/types/product.type'
 import {
@@ -18,6 +19,7 @@ import ProductItem from '../ProductList/components/ProductItem'
 import ProductRating from '../ProductRating'
 
 export default function ProductDetail() {
+  const navigate = useNavigate()
   const { nameID } = useParams()
   const queryClient = useQueryClient()
 
@@ -35,16 +37,27 @@ export default function ProductDetail() {
     }
   })
   const productData = productDetailQuery.data?.data.data
+
   const addToCartMutation = useMutation({
     mutationFn: (body: { product_id: string; buy_count: number }) =>
       purchaseApi.addToCart(body),
     onSuccess: (data) => {
+      console.log(123456)
+
       queryClient.invalidateQueries({
         queryKey: ['purchases', { status: purchasesStatus.inCart }]
       })
-      toast.success(data.data.message)
+      toast.success(data.data.message, {
+        autoClose: 1000
+      })
+    },
+    onError: (error) => {
+      navigate({
+        pathname: path.login
+      })
     }
   })
+
   const queryConfig: ProductListConfig = {
     page: '1',
     category: productData?.category._id
@@ -85,6 +98,14 @@ export default function ProductDetail() {
       buy_count: buyCount,
       product_id: productData?._id as string
     })
+  }
+  const handleBuyNow = async () => {
+    const res = await addToCartMutation.mutateAsync({
+      buy_count: buyCount,
+      product_id: productData?._id as string
+    })
+    const purchase = res.data.data
+    navigate(path.cart, { state: { purchaseId: purchase._id } })
   }
   const handleZoom = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -236,12 +257,11 @@ export default function ProductDetail() {
                 <span>{` sản phẩm có sẵn`}</span>
               </div>
             </div>
-            <div
-              className='mt-6 flex items-center'
-              onClick={addToCart}
-              aria-hidden='true'
-            >
-              <button className='flex h-12 items-center justify-center rounded-sm border border-orange-700 bg-orange-500/10 px-4 text-lg capitalize text-orange-600 transition duration-150 hover:bg-orange-300/10'>
+            <div className='mt-6 flex items-center' aria-hidden='true'>
+              <button
+                onClick={addToCart}
+                className='flex h-12 items-center justify-center rounded-sm border border-orange-700 bg-orange-500/10 px-4 text-lg capitalize text-orange-600 transition duration-150 hover:bg-orange-300/10'
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -259,7 +279,10 @@ export default function ProductDetail() {
 
                 <span className='ml-2'>Thêm vào giỏ hàng</span>
               </button>
-              <button className='ml-4 flex h-12 items-center justify-center rounded-sm bg-orange-500 px-4 capitalize text-white outline-none transition duration-150 hover:bg-orange-600/90'>
+              <button
+                onClick={handleBuyNow}
+                className='ml-4 flex h-12 items-center justify-center rounded-sm bg-orange-500 px-4 capitalize text-white outline-none transition duration-150 hover:bg-orange-600/90'
+              >
                 Mua ngay
               </button>
             </div>

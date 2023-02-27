@@ -4,11 +4,12 @@ import MainHeader from 'src/components/MainHeader'
 
 interface Props {
   children: React.ReactNode
+  header: React.ReactNode
 }
-export default function MainLayout({ children }: Props) {
+export default function MainLayout({ header, children }: Props) {
   return (
     <div>
-      <MainHeader />
+      {header}
       {children}
       <Footer />
     </div>
