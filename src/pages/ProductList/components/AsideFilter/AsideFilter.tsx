@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import classNames from 'classnames'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import { Controller, useForm } from 'react-hook-form'
 import { createSearchParams, Link, useNavigate } from 'react-router-dom'
 import InputNumber from 'src/components/InputNumber'
@@ -65,8 +65,8 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
         ])
       ).toString()
     })
-    setValue('price_max', '', { shouldDirty: true })
-    setValue('price_min', '', { shouldDirty: true })
+    setValue('price_max', ' ', { shouldDirty: true })
+    setValue('price_min', ' ', { shouldDirty: true })
   }
   return (
     <div className='py-4'>
@@ -188,7 +188,7 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
                       trigger('price_min')
                     }}
                     // truyền thêm ref để có những method như focus,...
-
+                    value={field.value}
                     classNameError='hidden'
                   />
                 )

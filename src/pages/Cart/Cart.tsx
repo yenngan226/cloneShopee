@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import React, { useContext, useEffect, useMemo, useState } from 'react'
+import React, { useContext, useEffect, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import purchaseApi from 'src/api/api/purchase.api'
 import LoadingButton from 'src/components/LoadingButton'
@@ -13,7 +13,7 @@ import {
   generateURL
 } from 'src/utils/formatNumber.utils'
 import { produce } from 'immer'
-import { keyBy } from 'lodash'
+import keyBy from 'lodash/keyBy'
 import { toast } from 'react-toastify'
 import { Appcontext } from 'src/contexts/app.context'
 import noPurchaseImg from '../../assets/img/nopurchase.png'

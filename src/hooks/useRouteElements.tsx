@@ -1,18 +1,22 @@
-import React, { useContext } from 'react'
+import { lazy, Suspense, useContext } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
-import CartHeader from 'src/components/CartHeader'
-import MainHeader from 'src/components/MainHeader'
+
 import path from 'src/constant/path'
 import { Appcontext } from 'src/contexts/app.context'
+import CartLayout from 'src/layouts/CartLayout/CartLayout'
 import MainLayout from 'src/layouts/MainLayout'
 import RegisterLayout from 'src/layouts/RegisterLayout'
-import Cart from 'src/pages/Cart'
-import Login from 'src/pages/Login'
-import NotFound from 'src/pages/NotFound'
-import ProductDetail from 'src/pages/PageDetail'
-import ProductList from 'src/pages/ProductList'
-import Profile from 'src/pages/Profile'
-import Register from 'src/pages/Register'
+import UserLayout from 'src/pages/User/Layout'
+import ChangePassword from 'src/pages/User/pages/ChangePassword'
+import PurchasesHistory from 'src/pages/User/pages/PurchasesHistory'
+
+const Login = lazy(() => import('src/pages/Login'))
+const ProductDetail = lazy(() => import('src/pages/PageDetail'))
+const ProductList = lazy(() => import('src/pages/ProductList'))
+const Profile = lazy(() => import('src/pages/Profile'))
+const Register = lazy(() => import('src/pages/Register'))
+const Cart = lazy(() => import('src/pages/Cart'))
+const NotFound = lazy(() => import('src/pages/NotFound'))
 
 function ProtectedRoute() {
   const { isAuthenticated } = useContext(Appcontext)
@@ -20,83 +24,102 @@ function ProtectedRoute() {
 }
 function RejectedRoute() {
   const { isAuthenticated } = useContext(Appcontext)
-  return !isAuthenticated ? (
-    <RegisterLayout>
-      <Outlet />
-    </RegisterLayout>
-  ) : (
-    <Navigate to='/' />
-  )
+  return !isAuthenticated ? <Outlet /> : <Navigate to='/' />
 }
 export default function useRouteElements() {
   const routeElement = useRoutes([
     {
-      path: '',
-      element: <RejectedRoute />,
-
+      path: '/',
+      element: <MainLayout />,
       children: [
         {
-          path: path.login,
-
-          element: <Login />
+          path: '/',
+          element: (
+            <Suspense>
+              <ProductList />
+            </Suspense>
+          )
         },
         {
-          path: path.register,
-
-          element: <Register />
+          path: path.productDetail,
+          element: (
+            <Suspense>
+              <ProductDetail />
+            </Suspense>
+          )
         }
       ]
     },
     {
       path: '',
       element: <ProtectedRoute />,
-
       children: [
         {
-          path: path.profile,
-
-          element: (
-            <MainLayout header={<MainHeader />}>
-              <Profile />
-            </MainLayout>
-          )
+          path: '',
+          element: <MainLayout />,
+          children: [
+            {
+              path: path.user,
+              element: <UserLayout />,
+              children: [
+                { path: path.profile, element: <Profile /> },
+                { path: path.changePassword, element: <ChangePassword /> },
+                { path: path.purchasesHistory, element: <PurchasesHistory /> }
+              ]
+            }
+          ]
         },
         {
           path: path.cart,
-
-          element: (
-            <MainLayout header={<CartHeader />}>
-              <Cart />
-            </MainLayout>
-          )
+          element: <CartLayout />,
+          children: [
+            {
+              path: '',
+              element: (
+                <Suspense>
+                  <Cart />
+                </Suspense>
+              )
+            }
+          ]
         }
       ]
     },
+
     {
-      path: path.home,
-      index: true,
-      element: (
-        <MainLayout header={<MainHeader />}>
-          <ProductList />
-        </MainLayout>
-      )
+      path: '',
+      element: <RejectedRoute />,
+      children: [
+        {
+          path: '',
+          element: <RegisterLayout />,
+          children: [
+            {
+              path: path.login,
+
+              element: (
+                <Suspense>
+                  <Login />
+                </Suspense>
+              )
+            },
+            {
+              path: path.register,
+
+              element: (
+                <Suspense fallback={<></>}>
+                  <Register />
+                </Suspense>
+              )
+            }
+          ]
+        }
+      ]
     },
-    {
-      path: path.productDetail,
-      index: true,
-      element: (
-        <MainLayout header={<MainHeader />}>
-          <ProductDetail />
-        </MainLayout>
-      )
-    },
+
     {
       path: '*',
-      element: (
-        <MainLayout header={<MainHeader />}>
-          <NotFound />
-        </MainLayout>
-      )
+      element: <NotFound />
     }
   ])
   return routeElement

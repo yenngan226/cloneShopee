@@ -31,7 +31,6 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
         onChange && onChange(e)
         //Cập nhật localValue state
         setLocalValue(value)
-        console.log(localValue)
       }
     }
     return (
@@ -41,7 +40,7 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
           className={classNameInput}
           onChange={handleOnChange}
           ref={ref}
-          value={value || localValue}
+          value={value || value === ' ' ? value : localValue}
         />
         <div className={classNameError}>{errorMessage}</div>
       </div>

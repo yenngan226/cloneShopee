@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import DOMPurify from 'dompurify'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Navigate, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { productApi } from 'src/api/api/product.api'
 import purchaseApi from 'src/api/api/purchase.api'
@@ -74,7 +74,7 @@ export default function ProductDetail() {
       return productApi.getProduct(queryConfig)
     },
     enabled: productData ? true : false,
-    staleTime: 3 * 60 * 1000
+    staleTime: 20000
   })
 
   useEffect(() => {
