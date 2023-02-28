@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
-import { useQuery } from '@tanstack/react-query'
-import { useContext } from 'react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useContext, useEffect } from 'react'
 import { Appcontext } from 'src/contexts/app.context'
 import path from 'src/constant/path'
 import { purchasesStatus } from 'src/constant/purchase'
@@ -13,6 +13,7 @@ import useSearchProducts from 'src/hooks/useSearchProducts'
 
 const MAX_CART_PRODUCTS = 5
 export default function MainHeader() {
+  const queryClient = useQueryClient()
   const { register, onSubmit } = useSearchProducts()
   const { isAuthenticated } = useContext(Appcontext)
 
@@ -24,6 +25,15 @@ export default function MainHeader() {
     enabled: isAuthenticated
   })
   const purchasesInCartProducts = purchasesInCart?.data.data
+  useEffect(() => {
+    if (!isAuthenticated) {
+      console.log(purchasesInCartProducts)
+
+      queryClient.removeQueries({
+        queryKey: ['purchases', { status: purchasesStatus.inCart }]
+      })
+    }
+  }, [isAuthenticated, queryClient])
 
   return (
     <div className=' bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-2'>
@@ -80,7 +90,7 @@ export default function MainHeader() {
                       Sản phẩm mới thêm
                     </div>
                     <div className='mt-5'>
-                      {purchasesInCartProducts?.length ? (
+                      {isAuthenticated && purchasesInCartProducts?.length ? (
                         purchasesInCartProducts
                           .slice(0, MAX_CART_PRODUCTS)
                           .map((product) => {
@@ -154,7 +164,7 @@ export default function MainHeader() {
                   />
                 </svg>
                 <span className='absolute right-[-0.8rem] top-[-0.6rem] rounded-full bg-white py-[1px] px-[0.7rem] text-sm text-orange-600'>
-                  {purchasesInCartProducts?.length
+                  {purchasesInCartProducts?.length && isAuthenticated
                     ? purchasesInCartProducts?.length
                     : 0}
                 </span>

@@ -10,19 +10,18 @@ import { clearLS } from 'src/utils/auth.utils'
 import Popover from '../Popover'
 
 export default function NavHeader() {
-  const { isAuthenticated, setIsAuthenticated, setProfile, profile } =
-    useContext(Appcontext)
+  const { isAuthenticated, reset, profile } = useContext(Appcontext)
   const queryClient = useQueryClient()
 
   const logoutMutation = useMutation({
     mutationFn: () => authApi.logout(),
     onSuccess: (data) => {
       clearLS()
-      setIsAuthenticated(false)
-      setProfile(null)
-      queryClient.removeQueries({
-        queryKey: ['purchases', { status: purchasesStatus.inCart }]
-      })
+      reset()
+      //Do useEffect ở main header xử lý
+      // queryClient.removeQueries({
+      //   queryKey: ['purchases', { status: purchasesStatus.inCart }]
+      // })
     },
     onError: (error) => {
       console.log(error)
