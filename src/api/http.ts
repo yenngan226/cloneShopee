@@ -40,8 +40,8 @@ class Http {
         timeout: 10000,
         headers: {
           'Content-Type': 'application/json',
-          //'expire-access-token': 3600,
-        //  'expire-refresh-token': 20
+          'expire-access-token': 3600,
+         'expire-refresh-token': 800000
         }
       })),
       this.instance.interceptors.request.use(
