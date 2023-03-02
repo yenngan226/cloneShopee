@@ -10,7 +10,7 @@ import { Category } from 'src/types/category.type'
 import { QueryConfig } from 'src/types/product.type'
 import { NoUndefinedField } from 'src/types/utils.type'
 import schema, { Schema } from 'src/utils/rules'
-
+import { useTranslation } from 'react-i18next'
 import RatingStar from '../RatingStar'
 
 type Props = {
@@ -21,6 +21,7 @@ type FormData = NoUndefinedField<Pick<Schema, 'price_max' | 'price_min'>>
 
 const priceSchema = schema.pick(['price_max', 'price_min'])
 export default function AsideFilter({ categories, queryConfig }: Props) {
+  const { t } = useTranslation('home')
   const navigate = useNavigate()
   const { category, price_max, price_min } = queryConfig
   const priceDefaultValue = {
@@ -90,12 +91,13 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
             d='M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z'
           />
         </svg>
-        Tất cả danh mục
+        {t('aside filter.all categories')}
       </Link>
       <div className='my-4 h-[1px] bg-gray-400'></div>
       <ul>
         {categories.map((categoryItem, index) => {
           const isActive = category === categoryItem._id
+          const name = `aside filter.${categoryItem.name}`
           return (
             <li className='py-2 pl-2 ' key={index}>
               <Link
@@ -120,13 +122,16 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
                     <path d='M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z' />
                   </svg>
                 )}
-                {categoryItem.name}
+                {t(name as any)}
               </Link>
             </li>
           )
         })}
       </ul>
-      <Link to={path.home} className='mt-6 flex items-center  font-bold'>
+      <Link
+        to={path.home}
+        className='mt-6 flex items-center font-bold uppercase'
+      >
         <svg
           xmlns='http://www.w3.org/2000/svg'
           fill='none'
@@ -141,11 +146,11 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
             d='M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z'
           />
         </svg>
-        BỘ LỌC TÌM KIẾM
+        {t('aside filter.filter')}
       </Link>
       <div className='my-4 h-[1px] bg-gray-400'></div>
       <div className='py-2 pl-2'>
-        <div>Khoảng giá</div>
+        <div>{t('aside filter.priceRange')}</div>
         <form action='' className='mt-2' onSubmit={onSubmit}>
           <div className='flex items-center justify-between'>
             <Controller
@@ -159,7 +164,7 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
                     className='w-10 grow'
                     name='from'
                     classNameInput='px-1 w-full text-sm outline-none border border-gray-300 focus:border-gray-500'
-                    placeholder='đ Từ'
+                    placeholder={`đ ${t('aside filter.from')}`}
                     onChange={(e) => {
                       field.onChange(e)
                       trigger('price_max')
@@ -182,7 +187,7 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
                     className='w-10 grow'
                     name='to'
                     classNameInput='px-1 w-full text-sm outline-none border border-gray-300 focus:border-gray-500'
-                    placeholder='đ Đến'
+                    placeholder={`đ ${t('aside filter.to')}`}
                     onChange={(e) => {
                       field.onChange(e)
                       trigger('price_min')
@@ -200,18 +205,18 @@ export default function AsideFilter({ categories, queryConfig }: Props) {
             {errors.price_min?.message}
           </div>
           <LoadingButton className='w-full rounded-md bg-orangeShopee p-2 uppercase text-white transition duration-200 hover:bg-orange-700'>
-            Áp dụng
+            {t('aside filter.apply')}
           </LoadingButton>
         </form>
       </div>
       <div className='my-4 h-[1px] bg-gray-400'></div>
-      <div className='text-sm'>Đánh giá</div>
+      <div className='pt-2 pl-2'>{t('aside filter.rating')}</div>
       <RatingStar queryConfig={queryConfig} />
       <LoadingButton
         onClick={handleClearFilter}
         className='w-full rounded-md bg-orangeShopee p-2 uppercase text-white transition duration-200 hover:bg-orange-700'
       >
-        Xóa tất cả
+        {t('aside filter.deleteAll')}
       </LoadingButton>
     </div>
   )

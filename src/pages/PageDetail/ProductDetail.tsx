@@ -15,15 +15,15 @@ import {
   getIdFromURL,
   rateSale
 } from 'src/utils/formatNumber.utils'
-import NotFound from '../NotFound'
 import ProductItem from '../ProductList/components/ProductItem'
 import ProductRating from '../ProductRating'
+import { useTranslation } from 'react-i18next'
 
 export default function ProductDetail() {
   const navigate = useNavigate()
   const { nameID } = useParams()
   const queryClient = useQueryClient()
-
+  const { t } = useTranslation(['product', 'header'])
   const id = getIdFromURL(nameID as string)
   const [currentIndexImg, setCurrentIndexImg] = useState<number[]>([0, 5])
   const [activeImg, setActiveImg] = useState<string>('')
@@ -137,7 +137,6 @@ export default function ProductDetail() {
     setBuyCount(value)
   }
   if (!productData) return null
-  console.log(productData._id)
 
   return (
     <div className='bg-gray-200 py-4 md:px-6'>
@@ -232,7 +231,7 @@ export default function ProductDetail() {
                 <span className='mr-1'>
                   {formatNumberToSocialType(productData.sold)}
                 </span>
-                <span className='text-xs'>Đã bán</span>
+                <span className='text-xs'>{t('product:sold')}</span>
               </div>
             </div>
             <div className='mt-6 flex items-center bg-gray-200 p-4'>
@@ -248,12 +247,12 @@ export default function ProductDetail() {
               </div>
               <div className='ml-3 bg-orange-500 px-1 text-xs font-semibold uppercase text-white'>
                 {rateSale(productData.price_before_discount, productData.price)}
-                <span className='ml-1'>Giảm</span>
+                <span className='ml-1 uppercase'>{t('product:off')}</span>
               </div>
             </div>
             <div className='mt-6 flex items-center'>
               <span className='capitialize flex-shrink-0 text-gray-500'>
-                Số lượng
+                {t('product:quantity')}
               </span>
               <QuantityController
                 onType={handleBuyCount}
@@ -263,8 +262,8 @@ export default function ProductDetail() {
                 max={productData.quantity}
               />
               <div className='ml-4 text-sm text-gray-600 md:ml-6'>
-                <span>{productData.quantity}</span>
-                <span>{` sản phẩm có sẵn`}</span>
+                <span>{`${productData.quantity} `}</span>
+                <span>{t('product:available')}</span>
               </div>
             </div>
             <div className='mt-6 flex items-center' aria-hidden='true'>
@@ -287,13 +286,13 @@ export default function ProductDetail() {
                   />
                 </svg>
 
-                <span className='ml-2'>Thêm vào giỏ hàng</span>
+                <span className='ml-2'>{t('header:addToCart')}</span>
               </button>
               <button
                 onClick={handleBuyNow}
                 className='ml-4 flex h-12 items-center justify-center rounded-sm bg-orange-500 px-4 capitalize text-white outline-none transition duration-150 hover:bg-orange-600/90'
               >
-                Mua ngay
+                {t('product:buyNow')}
               </button>
             </div>
           </div>
@@ -302,7 +301,7 @@ export default function ProductDetail() {
       <div className='mt-4 '>
         <div className='bg-white py-4 px-2 md:container'>
           <div className='mt-2 rounded bg-gray-50 p-2 text-lg uppercase text-slate-700'>
-            Mô tả sản phẩm
+            {t('product:describe')}
           </div>
           <div className='mt-4 mb-4 p-2 text-sm leading-loose'>
             <div
@@ -316,7 +315,7 @@ export default function ProductDetail() {
       <div className='mt-4'>
         <div className='bg-white px-2 py-4 md:container'>
           <div className='mt-2 rounded bg-gray-50 p-2 text-lg uppercase text-slate-700'>
-            Có thể bạn cũng thích
+            {t('product:sameCate')}
           </div>
           {sameCateProduct && (
             <div className='mt-4 grid grid-cols-2 gap-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7'>

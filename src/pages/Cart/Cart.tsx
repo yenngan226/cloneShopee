@@ -17,8 +17,11 @@ import keyBy from 'lodash/keyBy'
 import { toast } from 'react-toastify'
 import { Appcontext } from 'src/contexts/app.context'
 import noPurchaseImg from '../../assets/img/nopurchase.png'
+import { useTranslation } from 'react-i18next'
 
 export default function Cart() {
+  const { t } = useTranslation(['product', 'header'])
+
   const location = useLocation()
   const { extendedPurchases, setExtendedPurchases } = useContext(Appcontext)
   const purchaseIdFromLocation = (
@@ -185,15 +188,29 @@ export default function Cart() {
                           onChange={handleCheckAll}
                         />
                       </div>
-                      <div className='flex-grow text-black'>Sản phẩm</div>
+                      <div className='flex-grow text-black'>
+                        {t('product:products')}
+                      </div>
                     </div>
                   </div>
                   <div className='col-span-6'>
                     <div className='grid grid-cols-5'>
-                      <div className='col-span-2 text-center'>Đơn giá</div>
-                      <div className='col-span-1 text-center'>Số lượng</div>
-                      <div className='col-span-1 text-center'>Số tiền</div>
-                      <div className='col-span-1 text-center'>Thao tác</div>
+                      <div className='col-span-2 text-center'>
+                        {' '}
+                        {t('product:unitPrice')}
+                      </div>
+                      <div className='col-span-1 text-center'>
+                        {' '}
+                        {t('product:quantity')}
+                      </div>
+                      <div className='col-span-1 text-center'>
+                        {' '}
+                        {t('product:totalPrice')}
+                      </div>
+                      <div className='col-span-1 text-center'>
+                        {' '}
+                        {t('product:actions')}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -294,7 +311,7 @@ export default function Cart() {
                                 className='hover:text-orangeShopee'
                                 onClick={handleDelete(purchase._id)}
                               >
-                                Xoá
+                                {t('product:delete')}
                               </button>
                             </div>
                           </div>
@@ -319,21 +336,23 @@ export default function Cart() {
                   className='mx-1 hover:text-orangeShopee lg:mx-3'
                   onClick={handleCheckAll}
                 >
-                  {`Chọn tất cả(${extendedPurchases.length})`}
+                  {`${t('product:seleteAll')}(${extendedPurchases.length})`}
                 </button>
                 <button
                   className='mx-3 hover:text-orangeShopee'
                   onClick={handleDeleteMultiplePurchase}
                 >
-                  Xóa
+                  {t('product:delete')}
                 </button>
               </div>
               <div className='ml-auto mt-3 flex items-center justify-between md:mt-0'>
                 <div>
                   <div className='flex items-center justify-between sm:justify-end'>
                     <div className='w-full items-center md:flex'>
-                      <div>{`Tổng thanh toán`}</div>
-                      <div>{`(${checkedPurchasesCount} Sản phẩm)`}</div>
+                      <div>{t('product:total')}</div>
+                      <div>{`(${checkedPurchasesCount} ${t(
+                        'product:products'
+                      )})`}</div>
                     </div>
                     <div className='ml-2 text-2xl text-orange-500'>{`đ${currencyExchange(
                       totalCheckedPurchaseAmount
@@ -352,7 +371,7 @@ export default function Cart() {
                 className='w-30 ml-auto mt-3 flex h-12 items-center justify-center bg-orangeShopee p-3 uppercase text-white hover:bg-red-600 md:mt-0 md:ml-3'
                 disabled={buyProductMutation.isLoading}
               >
-                Mua hàng
+                {t('product:checkOut')}
               </LoadingButton>
             </div>
           </>
@@ -363,12 +382,12 @@ export default function Cart() {
               alt=''
               className='h-[12rem] w-[12rem] object-cover'
             />
-            <div className='mt-2 text-gray-500'>Giỏ hàng của bạn còn trống</div>
+            <div className='mt-2 text-gray-500'>{t('header:noOrder')}</div>
             <Link
               to={path.home}
               className='mt-5 rounded-sm bg-orangeShopee py-2 px-3 uppercase text-white hover:bg-orangeShopee/80'
             >
-              Mua hàng
+              {t('product:buyNow')}
             </Link>
           </div>
         )}

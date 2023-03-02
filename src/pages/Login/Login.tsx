@@ -12,9 +12,11 @@ import { useContext } from 'react'
 import { Appcontext } from 'src/contexts/app.context'
 import LoadingButton from 'src/components/LoadingButton'
 import schema, { Schema } from 'src/utils/rules'
+import { useTranslation } from 'react-i18next'
 
 type LoginType = Pick<Schema, 'email' | 'password'>
 export default function Login() {
+  const { t } = useTranslation(['header'])
   const navigate = useNavigate()
   const { setIsAuthenticated, setProfile } = useContext(Appcontext)
   const loginSchema = schema.pick(['email', 'password'])
@@ -66,7 +68,7 @@ export default function Login() {
               onSubmit={onSubmit}
               noValidate
             >
-              <div className='text-2xl'>Đăng nhập</div>
+              <div className='text-2xl'>{t('header:login')}</div>
 
               <Input
                 register={register}
@@ -92,15 +94,15 @@ export default function Login() {
                   disabled={loginAccountMutation.isLoading}
                   className='flex w-full items-center justify-center bg-orangeShopee py-3 px-2 uppercase text-white hover:bg-red-600'
                 >
-                  Đăng nhập
+                  {t('header:login')}
                 </LoadingButton>
               </div>
               <div className='mt-8 flex justify-center'>
                 <div className='mr-2 text-slate-400'>
-                  Bạn chưa có tài khoản?
+                  {t('header:noAccount')}
                 </div>
                 <Link to='/register' className='text-red-600'>
-                  Đăng ký
+                  {t('header:register')}
                 </Link>
               </div>
             </form>

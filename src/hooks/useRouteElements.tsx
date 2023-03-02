@@ -62,9 +62,30 @@ export default function useRouteElements() {
               path: path.user,
               element: <UserLayout />,
               children: [
-                { path: path.profile, element: <Profile /> },
-                { path: path.changePassword, element: <ChangePassword /> },
-                { path: path.purchasesHistory, element: <PurchasesHistory /> }
+                {
+                  path: path.profile,
+                  element: (
+                    <Suspense>
+                      <Profile />
+                    </Suspense>
+                  )
+                },
+                {
+                  path: path.changePassword,
+                  element: (
+                    <Suspense>
+                      <ChangePassword />
+                    </Suspense>
+                  )
+                },
+                {
+                  path: path.purchasesHistory,
+                  element: (
+                    <Suspense>
+                      <PurchasesHistory />
+                    </Suspense>
+                  )
+                }
               ]
             }
           ]

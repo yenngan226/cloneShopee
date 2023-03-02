@@ -3,16 +3,18 @@ import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { authApi } from 'src/api/api/auth.api'
 import path from 'src/constant/path'
-import { purchasesStatus } from 'src/constant/purchase'
+import { useTranslation } from 'react-i18next'
 import { Appcontext } from 'src/contexts/app.context'
 import { clearLS } from 'src/utils/auth.utils'
 
 import Popover from '../Popover'
+import { locales } from 'src/i18n/i18n'
+import { t } from 'i18next'
 
 export default function NavHeader() {
+  const { i18n } = useTranslation(['home', 'header'])
+  const currentLanguage = locales[i18n.language as keyof typeof locales]
   const { isAuthenticated, reset, profile } = useContext(Appcontext)
-  const queryClient = useQueryClient()
-
   const logoutMutation = useMutation({
     mutationFn: () => authApi.logout(),
     onSuccess: (data) => {
@@ -29,7 +31,9 @@ export default function NavHeader() {
   })
 
   const handleLogout = () => logoutMutation.mutate()
-
+  const changeLanguage = (lng: 'vi' | 'en') => {
+    i18n.changeLanguage(lng)
+  }
   return (
     <div>
       <div className='flex justify-between md:justify-end '>
@@ -40,10 +44,20 @@ export default function NavHeader() {
           renderPopover={
             <div className='relative rounded-md border border-gray-200 bg-white shadow-md'>
               <div className='flex flex-col px-2 py-3'>
-                <button className='py-2 px-4 text-sm hover:bg-slate-300 hover:text-orangeShopee'>
+                <button
+                  onClick={() => {
+                    changeLanguage('vi')
+                  }}
+                  className='py-2 px-4 text-left text-sm hover:bg-slate-300 hover:text-orangeShopee'
+                >
                   Tiếng Việt
                 </button>
-                <button className='mt-2 py-2 px-4 text-sm hover:bg-slate-300 hover:text-orangeShopee'>
+                <button
+                  onClick={() => {
+                    changeLanguage('en')
+                  }}
+                  className='mt-2 py-2 px-4 text-left text-sm hover:bg-slate-300 hover:text-orangeShopee'
+                >
                   English
                 </button>
               </div>
@@ -64,7 +78,7 @@ export default function NavHeader() {
               d='M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418'
             />
           </svg>
-          <span className='mx-1 text-sm'>Tiếng Việt</span>
+          <span className='mx-1 text-sm'>{currentLanguage}</span>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
@@ -83,10 +97,10 @@ export default function NavHeader() {
         {!isAuthenticated && (
           <div className='flex justify-between'>
             <Link to={path.login} className='px-2 py-2 text-white'>
-              Đăng nhập
+              {t('header:login')}
             </Link>
             <Link to={path.register} className='px-2 py-2 text-white'>
-              Đăng ký
+              {t('header:register')}
             </Link>
           </div>
         )}
@@ -101,19 +115,19 @@ export default function NavHeader() {
                     to={path.profile}
                     className='py-2 px-4 text-sm hover:bg-slate-300 hover:text-orangeShopee'
                   >
-                    Tài khoản
+                    {t('header:account')}
                   </Link>
                   <Link
                     to='/'
                     className='py-2 px-4 text-sm hover:bg-slate-300 hover:text-orangeShopee'
                   >
-                    Đơn mua
+                    {t('header:purchase')}
                   </Link>
                   <button
-                    className='py-2 px-4 text-sm hover:bg-slate-300 hover:text-orangeShopee'
+                    className='py-2 px-4 text-left text-sm hover:bg-slate-300 hover:text-orangeShopee'
                     onClick={handleLogout}
                   >
-                    Đăng xuất
+                    {t('header:logout')}
                   </button>
                 </div>
               </div>

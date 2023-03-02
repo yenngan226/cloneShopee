@@ -1,0 +1,17 @@
+{
+  "account": "Tài khoản",
+  "purchase": "Đơn mua",
+  "logout": "Đăng xuất",
+  "newAdd": "Sản phẩm mới thêm",
+  "addToCart": "Thêm vào giỏ hàng",
+  "goToCart": "Xem giỏ hàng",
+  "cart": "Giỏ hàng",
+  "noOrder": "Chưa có sản phẩm nào",
+  "login": "Đăng nhập",
+  "register": "Đăng ký",
+  "noAccount": "Bạn chưa có tài khoản?",
+  "haveAccount": "Bạn đã có tài khoản?",
+  "password": "Mật khẩu",
+  "user": "Email/Số điện thoại",
+  "confirm": "Nhập lại mật khẩu"
+}

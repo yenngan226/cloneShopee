@@ -1,0 +1,17 @@
+{
+  "available": "Available quantity",
+  "sold": "Sold",
+  "off": "Off",
+  "quantity": "Quantity",
+  "buyNow": "Buy now",
+  "describe": "Product Description",
+  "sameCate": "From same category",
+  "products": "Products",
+  "unitPrice": "Unit Price",
+  "totalPrice": "Total Price",
+  "actions": "Actions",
+  "delete": "Delete",
+  "seleteAll": "Selete All",
+  "checkOut": "Check Out",
+  "total": "Total"
+}

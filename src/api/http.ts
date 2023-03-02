@@ -40,8 +40,8 @@ class Http {
         timeout: 10000,
         headers: {
           'Content-Type': 'application/json',
-          'expire-access-token': 10,
-          'expire-refresh-token': 20
+          'expire-access-token': 3600,
+          'expire-refresh-token': 800000
         }
       })),
       this.instance.interceptors.request.use(
@@ -108,6 +108,7 @@ class Http {
                       this.refreshTokenRequest = null
                     }, 10000)
                   })
+
               return this.refreshTokenRequest.then((access_token) => {
                 if (config?.headers) {
                   //Chạy lại request cũ vừa bị lỗi thêm 1 lần nữa với config có access_token moi

@@ -1,0 +1,17 @@
+{
+  "available": "Sản phẩm có sẵn",
+  "sold": "Đã bán",
+  "off": "Giảm",
+  "quantity": "Số lượng",
+  "buyNow": "Mua ngay",
+  "describe": "Mô tả sản phẩm",
+  "sameCate": "Có thể bạn cũng thích ",
+  "products": "Sản phẩm",
+  "unitPrice": "Đơn giá",
+  "totalPrice": "Số tiền",
+  "actions": "Thao tác",
+  "delete": "Xóa",
+  "seleteAll": "Chọn tất cả",
+  "checkOut": "Mua hàng",
+  "total": "Tổng tiền"
+}

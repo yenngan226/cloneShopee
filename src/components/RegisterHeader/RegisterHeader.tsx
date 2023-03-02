@@ -1,8 +1,10 @@
 import React, { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, useMatch } from 'react-router-dom'
 import { Appcontext } from 'src/contexts/app.context'
 
 export default function RegisterHeader() {
+  const { t } = useTranslation(['header'])
   const registerMatch = useMatch('/register')
   const isRegister = Boolean(registerMatch)
   return (
@@ -22,7 +24,7 @@ export default function RegisterHeader() {
             </Link>
 
             <div className='ml-5 rounded-md px-2 py-1 text-lg text-orangeShopee transition duration-200 lg:text-xl'>
-              {isRegister ? 'Đăng ký' : 'Đăng nhập'}
+              {isRegister ? t('header:register') : t('header:login')}
             </div>
           </nav>
         </div>

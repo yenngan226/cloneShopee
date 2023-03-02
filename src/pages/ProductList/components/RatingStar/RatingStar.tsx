@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import path from 'src/constant/path'
 import { QueryConfig } from 'src/types/product.type'
@@ -13,6 +14,7 @@ type Props = {
   queryConfig: QueryConfig
 }
 export default function RatingStar({ queryConfig }: Props) {
+  const { t } = useTranslation(['home'])
   const navigate = useNavigate()
   const handleFilterRating = (index: number) => {
     return navigate({
@@ -25,7 +27,7 @@ export default function RatingStar({ queryConfig }: Props) {
     })
   }
   return (
-    <ul className='my-3'>
+    <ul className='mt-1 mb-6'>
       {Array(5)
         .fill(0)
         .map((_, index) => {
@@ -77,7 +79,9 @@ export default function RatingStar({ queryConfig }: Props) {
                     )
                   })}
 
-                {index !== 0 && <span className='text-xs'>Trở lên</span>}
+                {index !== 0 && (
+                  <span className='text-xs'>{t('aside filter.up')}</span>
+                )}
               </div>
             </li>
           )

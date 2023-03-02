@@ -10,9 +10,11 @@ import nopurchase from '../../assets/img/nopurchase.png'
 import { currencyExchange } from 'src/utils/formatNumber.utils'
 import NavHeader from '../NavHeader'
 import useSearchProducts from 'src/hooks/useSearchProducts'
+import { useTranslation } from 'react-i18next'
 
 const MAX_CART_PRODUCTS = 5
 export default function MainHeader() {
+  const { t } = useTranslation('header')
   const queryClient = useQueryClient()
   const { register, onSubmit } = useSearchProducts()
   const { isAuthenticated } = useContext(Appcontext)
@@ -87,7 +89,7 @@ export default function MainHeader() {
                 <div className='relative max-w-[400px] rounded-md border border-gray-200 bg-white text-sm shadow-md'>
                   <div className='p-2'>
                     <div className='capitalize text-gray-300 '>
-                      Sản phẩm mới thêm
+                      {t('newAdd')}
                     </div>
                     <div className='mt-5'>
                       {isAuthenticated && purchasesInCartProducts?.length ? (
@@ -120,30 +122,30 @@ export default function MainHeader() {
                       ) : (
                         <div className=''>
                           <img alt='no purchase' src={nopurchase} />
-                          <div className='mt-3 text-center capitalize'>
-                            Chưa có sản phẩm
+                          <div className='mt-2 text-center capitalize'>
+                            {t('noOrder')}
                           </div>
                         </div>
                       )}
                     </div>
-                    <div className='mt-6 flex items-center justify-between'>
-                      <div className='flex cursor-pointer items-center hover:text-orangeShopee'>
-                        {purchasesInCartProducts && (
+                    {purchasesInCartProducts && (
+                      <div className='mt-6 flex items-center justify-between'>
+                        <div className='flex cursor-pointer items-center hover:text-orangeShopee'>
                           <span className='mr-1 font-semibold'>
                             {purchasesInCartProducts.length > MAX_CART_PRODUCTS
                               ? purchasesInCartProducts.length -
                                 MAX_CART_PRODUCTS
                               : ''}
                           </span>
-                        )}
-                        Thêm vào giỏ hàng
+                          {t('addedToCart')}
+                        </div>
+                        <Link to={path.cart}>
+                          <button className='rounder-md rounded bg-orangeShopee py-3 px-4 capitalize text-white shadow-sm'>
+                            {t('goToCart')}
+                          </button>
+                        </Link>
                       </div>
-                      <Link to={path.cart}>
-                        <button className='rounder-md rounded bg-orangeShopee py-3 px-4 text-white shadow-sm'>
-                          Xem giỏ hàng
-                        </button>
-                      </Link>
-                    </div>
+                    )}
                   </div>
                 </div>
               }
