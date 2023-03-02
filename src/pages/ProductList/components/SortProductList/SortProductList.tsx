@@ -131,25 +131,9 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
             <span className='text-orangeShopee'>{page}</span>
             <span className=''>/{pageSize}</span>
           </div>
-          <div className='ml-2'>
-            <Link
-              to={{
-                pathname: path.home,
-                search: createSearchParams({
-                  ...queryConfig,
-                  page: (page - 1).toString()
-                }).toString()
-              }}
-            >
-              <button
-                className={classNames(
-                  'h-8 rounded-tl-sm rounded-bl-sm  px-2 shadow-sm hover:bg-slate-100',
-                  {
-                    'pointer-events-none cursor-not-allowed': page === 1,
-                    'cursor-pointer bg-white': page !== 1
-                  }
-                )}
-              >
+          <div className='ml-2 flex'>
+            {page === 1 ? (
+              <div className='pointer-events-none flex h-8 cursor-not-allowed items-center bg-slate-200 px-2'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 24 24'
@@ -162,26 +146,39 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
                     clipRule='evenodd'
                   />
                 </svg>
-              </button>
-            </Link>
-            <Link
-              to={{
-                pathname: path.home,
-                search: createSearchParams({
-                  ...queryConfig,
-                  page: (page + 1).toString()
-                }).toString()
-              }}
-            >
-              <button
-                className={classNames(
-                  'h-8 rounded-tl-sm rounded-bl-sm  px-2 shadow-sm hover:bg-slate-100',
-                  {
-                    'pointer-events-none cursor-not-allowed': page === pageSize,
-                    'cursor-pointer bg-white': page !== pageSize
-                  }
-                )}
+              </div>
+            ) : (
+              <Link
+                to={{
+                  pathname: path.home,
+                  search: createSearchParams({
+                    ...queryConfig,
+                    page: (page - 1).toString()
+                  }).toString()
+                }}
               >
+                <button
+                  className={classNames(
+                    'h-8 cursor-pointer rounded-tl-sm  rounded-bl-sm bg-white px-2 shadow-sm hover:bg-slate-100'
+                  )}
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 24 24'
+                    fill='currentColor'
+                    className='h-4 w-4'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M7.72 12.53a.75.75 0 010-1.06l7.5-7.5a.75.75 0 111.06 1.06L9.31 12l6.97 6.97a.75.75 0 11-1.06 1.06l-7.5-7.5z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                </button>
+              </Link>
+            )}
+            {page === pageSize ? (
+              <span className='pointer-events-none flex h-8 cursor-not-allowed items-center bg-slate-200 px-2'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   viewBox='0 0 24 24'
@@ -194,8 +191,37 @@ export default function SortProductList({ queryConfig, pageSize }: Props) {
                     clipRule='evenodd'
                   />
                 </svg>
-              </button>
-            </Link>
+              </span>
+            ) : (
+              <Link
+                to={{
+                  pathname: path.home,
+                  search: createSearchParams({
+                    ...queryConfig,
+                    page: (page + 1).toString()
+                  }).toString()
+                }}
+              >
+                <button
+                  className={classNames(
+                    'h-8 rounded-tl-sm rounded-bl-sm  bg-white px-2 shadow-sm hover:bg-slate-100'
+                  )}
+                >
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 24 24'
+                    fill='currentColor'
+                    className='h-4 w-4'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M16.28 11.47a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 01-1.06-1.06L14.69 12 7.72 5.03a.75.75 0 011.06-1.06l7.5 7.5z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                </button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
