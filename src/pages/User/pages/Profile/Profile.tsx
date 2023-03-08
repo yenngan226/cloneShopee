@@ -7,6 +7,7 @@ import {
   useForm,
   useFormContext
 } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { userApi } from 'src/api/api/user.api'
 import DateSelect from 'src/components/DateSelect'
@@ -38,6 +39,7 @@ const profileSchema = userSchema.pick([
   'phone'
 ])
 function Infor() {
+  const { t } = useTranslation(['header'])
   const {
     register,
     control,
@@ -46,22 +48,22 @@ function Infor() {
   return (
     <>
       <div className='mt-6 flex flex-wrap items-start'>
-        <div className='w-[25%] truncate pt-3 text-right capitalize md:w-[20%]'>
-          Tên
+        <div className='w-[25%] truncate pt-1 text-right capitalize md:w-[20%]'>
+          {t('header:name')}
         </div>
         <div className='w-[75%] pl-5  md:w-[80%]'>
           <Input
             register={register}
             name='name'
-            placeholder='Tên'
+            placeholder={t('header:name')}
             errorMessage={errors.name?.message}
             classNameInput='w-full rounded-md border border-gray-300 p-1 outline-none focus:border-gray-500 focus:shadow-sm'
           />
         </div>
       </div>
       <div className=' flex flex-wrap items-start'>
-        <div className='w-[25%] truncate pt-3 text-right capitalize md:w-[20%]'>
-          Số điện thoại
+        <div className='w-[25%] truncate pt-1 text-right capitalize md:w-[20%]'>
+          {t('header:phone')}
         </div>
         <div className='w-[75%] pl-5 md:w-[80%]'>
           <Controller
@@ -72,7 +74,7 @@ function Infor() {
                 <InputNumber
                   {...field}
                   name='phone'
-                  placeholder='Số điện thoại'
+                  placeholder={t('header:phone')}
                   errorMessage={errors.phone?.message}
                   classNameInput='w-full rounded-md border border-gray-300 p-1 outline-none focus:border-gray-500 focus:shadow-sm'
                   onChange={field.onChange}
@@ -83,14 +85,14 @@ function Infor() {
         </div>
       </div>
       <div className=' flex flex-wrap items-start'>
-        <div className='w-[25%] truncate pt-3 text-right capitalize md:w-[20%]'>
-          Địa chỉ
+        <div className='w-[25%] truncate pt-1 text-right capitalize md:w-[20%]'>
+          {t('header:address')}
         </div>
         <div className='w-[75%] pl-5 md:w-[80%]'>
           <Input
             register={register}
             name='address'
-            placeholder='Địa chỉ'
+            placeholder={t('header:address')}
             errorMessage={errors.address?.message}
             classNameInput='w-full rounded-md border border-gray-300 p-1 outline-none focus:border-gray-500 focus:shadow-sm'
           />
@@ -100,6 +102,7 @@ function Infor() {
   )
 }
 export default function Profile() {
+  const { t } = useTranslation(['header'])
   const { setProfile } = useContext(Appcontext)
   const [avatarFile, setAvatarFile] = useState<File>()
   const userDefaulValue = {
@@ -208,10 +211,10 @@ export default function Profile() {
     <div className='rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20'>
       <div className='border-b border-b-gray-200 py-6'>
         <h1 className='capitialize text-lg font-medium text-gray-900'>
-          Hồ sơ của tôi
+          {t('header:myProfile')}
         </h1>
         <div className='mt-1 text-sm text-gray-700'>
-          Quản lý thông tin hồ sơ để bảo mật tài khoản
+          {t('header:myProfileDesc')}
         </div>
       </div>
       <FormProvider {...methods}>
@@ -221,17 +224,17 @@ export default function Profile() {
         >
           <div className='mt-6 flex-grow md:mt-0 md:pr-12'>
             <div className='flex flex-wrap items-start'>
-              <div className='w-[25%]  truncate pt-3 text-right capitalize md:w-[20%]'>
+              <div className='w-[25%]  truncate pt-1 text-right capitalize md:w-[20%]'>
                 Email
               </div>
               <div className='w-[75%] pl-5 md:w-[80%]'>
-                <div className='pt-3 text-gray-700'>{profile?.email}</div>
+                <div className='pt-1 text-gray-700'>{profile?.email}</div>
               </div>
             </div>
             <Infor />
             <div className=' flex flex-wrap items-start'>
-              <div className='w-[25%] truncate pt-3 text-right capitalize md:w-[20%]'>
-                Ngày sinh
+              <div className='w-[25%] truncate pt-1 text-right capitalize md:w-[20%]'>
+                {t('header:dob')}
               </div>
               <div className='w-[75%] pl-5 md:w-[80%]'>
                 <Controller
@@ -249,7 +252,7 @@ export default function Profile() {
                 />
 
                 <LoadingButton className='mt-3 flex h-8 items-center rounded-sm bg-orangeShopee px-3 text-center text-white hover:bg-orangeShopee/80'>
-                  Cập nhật
+                  {t('header:submit')}
                 </LoadingButton>
               </div>
             </div>
@@ -265,8 +268,8 @@ export default function Profile() {
               </div>
               <InputFile onChangeInputFile={handleChangeInputFile} />
               <div className='mt-3 text-gray-400'>
-                <div className=''>Kích thước file tối đa 1MB</div>
-                <div className=''>Định dạng file: .JPEG,.PNG</div>
+                <div className=''>{t('header:maxImgSize')}</div>
+                <div className=''>{t('header:imgType')}</div>
               </div>
             </div>
           </div>

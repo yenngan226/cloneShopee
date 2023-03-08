@@ -13,5 +13,12 @@
   "delete": "Delete",
   "seleteAll": "Selete All",
   "checkOut": "Check Out",
-  "total": "Total"
+  "total": "Total",
+  "Tất cả": "Total",
+  "Chờ xác nhận": "To confirm",
+  "Chờ thanh toán": "To pay",
+  "Đang giao": "To receive",
+  "Hoàn thành": "Completed",
+  "Đã hủy": "Cancelled",
+  "noPurchase": "No purchase yet"
 }

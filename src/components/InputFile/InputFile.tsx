@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { config } from 'src/constant/config'
 
@@ -6,6 +7,8 @@ type Props = {
   onChangeInputFile: (file: File) => void
 }
 export default function InputFile({ onChangeInputFile }: Props) {
+  const { t } = useTranslation(['header'])
+
   const avatarRef = useRef<HTMLInputElement>(null)
   const handleUploadImg = () => {
     avatarRef.current?.click()
@@ -36,10 +39,10 @@ export default function InputFile({ onChangeInputFile }: Props) {
       />
       <button
         type='button'
-        className='flex h-10 items-center justify-end rounded-sm border bg-white px-6 text-sm text-gray-600 shadow-sm'
+        className='flex h-10 items-center justify-end rounded-sm border bg-white px-6 text-sm text-gray-600 shadow-sm hover:shadow-md'
         onClick={handleUploadImg}
       >
-        Chọn ảnh
+        {t('header:upload')}
       </button>
     </>
   )

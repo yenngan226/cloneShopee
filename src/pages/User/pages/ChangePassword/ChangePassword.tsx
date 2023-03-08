@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import omit from 'lodash/omit'
 import pick from 'lodash/pick'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { userApi } from 'src/api/api/user.api'
 import Input from 'src/components/Input'
@@ -21,6 +22,7 @@ const passwordSchema = userSchema.pick([
   'confirm_password'
 ])
 export default function ChangePassword() {
+  const { t } = useTranslation(['header'])
   const {
     handleSubmit,
     formState: { errors },
@@ -62,10 +64,10 @@ export default function ChangePassword() {
     <div className='rounded-sm bg-white px-2 pb-10 shadow md:px-7 md:pb-20'>
       <div className='border-b border-b-gray-200 py-6'>
         <h1 className='capitialize text-lg font-medium text-gray-900'>
-          Hồ sơ của tôi
+          {t('header:myProfile')}
         </h1>
         <div className='mt-1 text-sm text-gray-700'>
-          Quản lý thông tin hồ sơ để bảo mật tài khoản
+          {t('header:myProfileDesc')}
         </div>
       </div>
 
@@ -73,14 +75,14 @@ export default function ChangePassword() {
         <div className='mt-6 flex-grow md:mt-0 md:pr-12'>
           <div className='mt-6 flex flex-wrap items-start '>
             <div className='w-[25%] truncate pt-1 text-right capitalize md:w-[20%]'>
-              Mật khẩu hiện tại
+              {t('header:currentPassword')}
             </div>
             <div className='w-[75%] pl-5  md:w-[80%]'>
               <Input
                 type='password'
                 register={register}
                 name='password'
-                placeholder='Mật khẩu hiện tại'
+                placeholder={t('header:currentPassword')}
                 errorMessage={errors.password?.message}
                 classNameInput='w-full rounded-md border border-gray-300 p-1 outline-none focus:border-gray-500 focus:shadow-sm'
               />
@@ -88,14 +90,14 @@ export default function ChangePassword() {
           </div>
           <div className='mt-3 flex flex-wrap items-start '>
             <div className='w-[25%] truncate pt-1 text-right capitalize md:w-[20%]'>
-              Mật khẩu mới
+              {t('header:newPassword')}
             </div>
             <div className='w-[75%] pl-5  md:w-[80%]'>
               <Input
                 type='password'
                 register={register}
                 name='new_password'
-                placeholder='Mật khẩu mới'
+                placeholder={t('header:newPassword')}
                 errorMessage={errors.new_password?.message}
                 classNameInput='w-full rounded-md border border-gray-300 p-1 outline-none focus:border-gray-500 focus:shadow-sm'
               />
@@ -103,22 +105,22 @@ export default function ChangePassword() {
           </div>
           <div className='mt-3 flex flex-wrap items-start '>
             <div className='w-[25%] truncate pt-1 text-right capitalize md:w-[20%]'>
-              Nhập lại mật khẩu
+              {t('header:confirm')}
             </div>
             <div className='w-[75%] pl-5  md:w-[80%]'>
               <Input
                 type='password'
                 register={register}
                 name='confirm_password'
-                placeholder='Nhập lại mật khẩu'
+                placeholder={t('header:confirm')}
                 errorMessage={errors.confirm_password?.message}
                 classNameInput='w-full rounded-md border border-gray-300 p-1 outline-none focus:border-gray-500 focus:shadow-sm'
               />
             </div>
           </div>
-          <div className=' flex flex-wrap items-start '>
+          <div className=' ml-auto w-[80%] pl-5 '>
             <LoadingButton className='mt-3 flex h-8 items-center rounded-sm bg-orangeShopee px-3 text-center text-white hover:bg-orangeShopee/80'>
-              Cập nhật
+              {t('header:submit')}
             </LoadingButton>
           </div>
         </div>

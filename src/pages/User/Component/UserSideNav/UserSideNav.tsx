@@ -1,11 +1,13 @@
 import classNames from 'classnames'
 import { useContext } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link, NavLink } from 'react-router-dom'
 import path from 'src/constant/path'
 import { Appcontext } from 'src/contexts/app.context'
 import { getAvatarUrl } from 'src/utils/formatNumber.utils'
 
 export default function UserSideNav() {
+  const { t } = useTranslation(['header'])
   const { profile } = useContext(Appcontext)
   return (
     <div className='overflow-hidden'>
@@ -42,7 +44,7 @@ export default function UserSideNav() {
                 d='M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10'
               />
             </svg>
-            Sửa hồ sơ
+            {t('header:editProfile')}
           </Link>
         </div>
       </div>
@@ -75,7 +77,7 @@ export default function UserSideNav() {
               />
             </svg>
           </div>
-          Tài khoản của tôi
+          {t('header:myAccount')}
         </NavLink>
         <NavLink
           to={path.changePassword}
@@ -105,7 +107,7 @@ export default function UserSideNav() {
               />
             </svg>
           </div>
-          Đổi mật khẩu
+          {t('header:changePassword')}
         </NavLink>
         <NavLink
           to={path.purchasesHistory}
@@ -135,7 +137,7 @@ export default function UserSideNav() {
               />
             </svg>
           </div>
-          Đơn mua
+          {t('header:purchase')}
         </NavLink>
       </div>
     </div>

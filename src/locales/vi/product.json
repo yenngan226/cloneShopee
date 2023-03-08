@@ -13,5 +13,12 @@
   "delete": "Xóa",
   "seleteAll": "Chọn tất cả",
   "checkOut": "Mua hàng",
-  "total": "Tổng tiền"
+  "total": "Tổng tiền",
+  "Tất cả": "Tất cả",
+  "Chờ xác nhận": "Chờ xác nhận",
+  "Chờ thanh toán": "Chờ thanh toán",
+  "Đang giao": "Đang giao",
+  "Hoàn thành": "Hoàn thành",
+  "Đã hủy": "Đã hủy",
+  "noPurchase": "Chưa có đơn hàng nào"
 }
