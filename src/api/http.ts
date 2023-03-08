@@ -18,6 +18,7 @@ import {
   getRefreshToken
 } from 'src/utils/auth.utils'
 import { ErrorResponse } from 'src/types/utils.type'
+import { config } from 'src/constant/config'
 
 // Ví dụ có 2 api bị hết token và gọi lại refresh token, theo bên dưới thì chỉ gọi 1 lần api refresh token.
 // Nhưng với trường hợp như sau nó sẽ gọi 2 lần api refresh token
@@ -36,7 +37,7 @@ class Http {
       (this.refreshToken = getRefreshToken()),
       (this.refreshTokenRequest = null),
       (this.instance = axios.create({
-        baseURL: 'https://api-ecom.duthanhduoc.com/',
+        baseURL: config.baseURL,
         timeout: 10000,
         headers: {
           'Content-Type': 'application/json',

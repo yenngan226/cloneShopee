@@ -13,7 +13,7 @@ import PurchasesHistory from 'src/pages/User/pages/PurchasesHistory'
 const Login = lazy(() => import('src/pages/Login'))
 const ProductDetail = lazy(() => import('src/pages/PageDetail'))
 const ProductList = lazy(() => import('src/pages/ProductList'))
-const Profile = lazy(() => import('src/pages/Profile'))
+const Profile = lazy(() => import('src/pages/User/pages/Profile'))
 const Register = lazy(() => import('src/pages/Register'))
 const Cart = lazy(() => import('src/pages/Cart'))
 const NotFound = lazy(() => import('src/pages/NotFound'))

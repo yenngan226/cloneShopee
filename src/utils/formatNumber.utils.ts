@@ -1,3 +1,5 @@
+import { config } from 'src/constant/config'
+
 export const currencyExchange = (currency: number) => {
   return new Intl.NumberFormat('de-DE').format(currency)
 }
@@ -26,4 +28,10 @@ export const generateURL = (name: string, id: string) => {
 export const getIdFromURL = (url: string) => {
   const arr = url.split('-i,')
   return arr[arr.length - 1]
+}
+
+export const getAvatarUrl = (avatar?: string) => {
+  return avatar
+    ? `${config.baseURL}images/${avatar}`
+    : 'https://easydrawingguides.com/wp-content/uploads/2018/09/Sun-10.png'
 }

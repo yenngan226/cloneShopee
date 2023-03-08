@@ -99,7 +99,7 @@ export default function MainHeader() {
                             return (
                               <div
                                 key={product._id}
-                                className='mt-2 flex items-center p-2 hover:bg-gray-200'
+                                className='mt-2 flex cursor-pointer items-center p-2 hover:bg-gray-200'
                               >
                                 <div className='flex-shrink-0'>
                                   <img

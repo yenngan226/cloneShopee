@@ -3,7 +3,7 @@ import omit from 'lodash/omit'
 import { useForm } from 'react-hook-form'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import path from 'src/constant/path'
-import schema, { Schema } from 'src/utils/rules'
+import { schema, Schema } from 'src/utils/rules'
 import useQueryConfig from './useQueryConfig'
 
 type FormData = Pick<Schema, 'name'>

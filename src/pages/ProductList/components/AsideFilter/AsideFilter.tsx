@@ -9,7 +9,7 @@ import path from 'src/constant/path'
 import { Category } from 'src/types/category.type'
 import { QueryConfig } from 'src/types/product.type'
 import { NoUndefinedField } from 'src/types/utils.type'
-import schema, { Schema } from 'src/utils/rules'
+import { Schema, schema } from 'src/utils/rules'
 import { useTranslation } from 'react-i18next'
 import RatingStar from '../RatingStar'
 

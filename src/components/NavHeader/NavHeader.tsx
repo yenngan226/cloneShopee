@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { authApi } from 'src/api/api/auth.api'
@@ -6,10 +6,10 @@ import path from 'src/constant/path'
 import { useTranslation } from 'react-i18next'
 import { Appcontext } from 'src/contexts/app.context'
 import { clearLS } from 'src/utils/auth.utils'
-
 import Popover from '../Popover'
 import { locales } from 'src/i18n/i18n'
 import { t } from 'i18next'
+import { getAvatarUrl } from 'src/utils/formatNumber.utils'
 
 export default function NavHeader() {
   const { i18n } = useTranslation(['home', 'header'])
@@ -34,6 +34,7 @@ export default function NavHeader() {
   const changeLanguage = (lng: 'vi' | 'en') => {
     i18n.changeLanguage(lng)
   }
+
   return (
     <div>
       <div className='flex justify-between md:justify-end '>
@@ -118,7 +119,7 @@ export default function NavHeader() {
                     {t('header:account')}
                   </Link>
                   <Link
-                    to='/'
+                    to={path.purchasesHistory}
                     className='py-2 px-4 text-sm hover:bg-slate-300 hover:text-orangeShopee'
                   >
                     {t('header:purchase')}
@@ -135,7 +136,7 @@ export default function NavHeader() {
           >
             <div className='mx-[0.1rem] mr-1 h-6 w-6 flex-shrink-0'>
               <img
-                src='https://easydrawingguides.com/wp-content/uploads/2018/09/Sun-10.png'
+                src={getAvatarUrl(profile?.avatar)}
                 alt='avatar'
                 className='h-full w-full rounded-full object-cover'
               />

@@ -11,7 +11,7 @@ import { isAxiosUnprocessableEntity } from 'src/utils/checkType.utils'
 import { useContext } from 'react'
 import { Appcontext } from 'src/contexts/app.context'
 import LoadingButton from 'src/components/LoadingButton'
-import schema, { Schema } from 'src/utils/rules'
+import { schema, Schema } from 'src/utils/rules'
 import { useTranslation } from 'react-i18next'
 
 type LoginType = Pick<Schema, 'email' | 'password'>

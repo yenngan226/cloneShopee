@@ -7,7 +7,7 @@ export default function LoadingButton(props: ButtonProps) {
   const { type, isLoading, className, children, disabled, ...rest } = props
   const newClassName = disabled ? `${className} cursor-not-allowed` : className
   return (
-    <button className={newClassName} disabled={disabled} {...rest}>
+    <button className={newClassName} disabled={disabled} {...rest} type={type}>
       <span className={`${disabled ? 'mr-2' : ''}`}>{children}</span>
       {isLoading && (
         <svg

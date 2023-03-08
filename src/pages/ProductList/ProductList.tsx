@@ -16,6 +16,7 @@ export default function ProductList() {
     queryFn: () => {
       return productApi.getProduct(queryConfig as ProductListConfig)
     },
+
     keepPreviousData: true,
     staleTime: 20000
   })
