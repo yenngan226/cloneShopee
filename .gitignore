@@ -7,12 +7,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+coverage
 node_modules
 dist
 dist-ssr
 *.local
 stats.html
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
