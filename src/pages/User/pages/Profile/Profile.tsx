@@ -184,7 +184,8 @@ export default function Profile() {
       }
       const res = await updateProfileMutaion.mutateAsync({
         ...data,
-        date_of_birth: localISOTime
+        date_of_birth: localISOTime,
+        avatar: avatarName
       })
       setProfile(res.data.data)
       refetch()
